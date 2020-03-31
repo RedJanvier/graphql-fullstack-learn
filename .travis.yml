@@ -1,0 +1,18 @@
+sudo: false
+
+language: node_js
+
+node_js:
+  - 'stable'
+
+env:
+  - MONGO_URI=mongodb://localhost/test
+
+services:
+  - mongodb
+
+cache:
+  npm: false
+
+notifications:
+  email: false
