@@ -7,20 +7,18 @@ export const checkAuth = async (req, res, next) => {
   };
   try {
     const authHeader = req.get('Authorization');
-    if (!authHeader) authFail();
-    const token = req.headers.authorization.startsWith('Bearer')
-      ? req.headers.authorization.split(' ')[1]
-      : req.headers.authorization;
+    if (!authHeader) return authFail();
+    const token = authHeader.split(' ')[1];
+    if (!token || token === '' || token === undefined) return authFail();
 
-    if (!token || token === '' || token === undefined) authFail();
     let decoded;
     try {
-      decoded = jwt.verfiy(token, process.env.JWT_SECRET);
+      decoded = jwt.verify(token, process.env.JWT_SECRET);
     } catch (error) {
-      authFail();
+      console.log('❌', ' error occurred: '.bgRed.bold, error.message.red);
+      return authFail();
     }
-
-    if (!decoded) authFail();
+    if (!decoded) return authFail();
 
     req.isAuth = true;
     req.withId = decoded.userId;
@@ -28,6 +26,7 @@ export const checkAuth = async (req, res, next) => {
 
     return next();
   } catch (error) {
+    console.log('❌', ' error occurred: '.bgRed.bold, error.message.red);
     return authFail();
   }
 };

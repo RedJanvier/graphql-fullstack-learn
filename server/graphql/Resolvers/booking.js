@@ -7,31 +7,41 @@ export default {
     try {
       const bookings = await Booking.find();
       return bookings.map(transformBooking);
-    } catch (err) {
-      console.log(err);
-      throw err;
-    }
-  },
-  bookEvent: async (args) => {
-    try {
-      const fetchedEvent = await Event.findOne({ _id: args.eventId });
-      const booking = new Booking({
-        event: fetchedEvent,
-        user: '5e7e844556a8e31b54abedbe',
-      });
-      const result = await booking.save();
-      return transformBooking(result);
     } catch (error) {
+      console.log('❌', error.message.red.bold);
       throw error;
     }
   },
-  cancelBooking: async (args) => {
+  bookEvent: async (args, req) => {
     try {
+      if (!req.withId) {
+        throw new Error('Unauthenticated!');
+      }
+      const fetchedEvent = await Event.findOne({ _id: args.eventId });
+      const booking = new Booking({
+        event: fetchedEvent,
+        user: req.withId,
+      });
+      const result = await booking.save();
+
+      return transformBooking(result);
+    } catch (error) {
+      console.log('❌', error.message.red.bold);
+      throw error;
+    }
+  },
+  cancelBooking: async (args, req) => {
+    try {
+      if (!req.withId) {
+        throw new Error('Unauthenticated!');
+      }
       const booking = await Booking.findById(args.bookingId).populate('event');
       const event = transformEvent(booking.event);
       await Booking.deleteOne({ _id: args.bookingId });
+
       return event;
     } catch (error) {
+      console.log('❌', error.message.red.bold);
       throw error;
     }
   },

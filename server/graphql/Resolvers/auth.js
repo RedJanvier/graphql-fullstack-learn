@@ -19,6 +19,7 @@ export default {
         password: null,
       }));
     } catch (error) {
+      console.log('❌', error.message.red.bold);
       throw error;
     }
   },
@@ -50,6 +51,7 @@ export default {
         tokenExpires: 1,
       };
     } catch (error) {
+      console.log('❌', error.message.red.bold);
       throw error;
     }
   },

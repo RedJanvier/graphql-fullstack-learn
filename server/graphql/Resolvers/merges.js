@@ -16,6 +16,7 @@ const fetchSingleEvent = async (eventId) => {
     const event = await Event.findById(eventId);
     return transformEvent(event);
   } catch (error) {
+    console.log('❌', error.message.red.bold);
     throw error;
   }
 };
@@ -36,15 +37,17 @@ fetchUser = async (userID) => {
       _id: user.id,
       createdEvents: fetchEvents.bind(this, user._doc.createdEvents),
     };
-  } catch (err) {
-    throw err;
+  } catch (error) {
+    console.log('❌', error.message.red.bold);
+    throw error;
   }
 };
 fetchEvents = async (eventIDs) => {
   try {
     const events = await Event.find({ _id: { $in: eventIDs } });
     return events.map(transformEvent);
-  } catch (err) {
-    throw err;
+  } catch (error) {
+    console.log('❌', error.message.red.bold);
+    throw error;
   }
 };

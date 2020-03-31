@@ -1,5 +1,6 @@
-import { config } from 'dotenv';
+import 'colors';
 import express from 'express';
+import { config } from 'dotenv';
 import { connect } from 'mongoose';
 import graphqlHttp from 'express-graphql';
 import { checkAuth } from './middlewares/is-auth';
@@ -29,7 +30,7 @@ connect(process.env.MONGO_URI, {
 }).then(() => {
   app.listen(
     PORT,
-    console.log(`Server started at http://localhost:${PORT}/graphql`)
+    console.log(`✅ Server started at http://localhost:${PORT}/graphql`.yellow)
   );
 });
 
