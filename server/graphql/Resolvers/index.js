@@ -1,6 +1,6 @@
 import eventResolvers from './event';
 import bookingResolvers from './booking';
-import authResolvers from './user';
+import authResolvers from './auth';
 
 export default {
   ...eventResolvers,

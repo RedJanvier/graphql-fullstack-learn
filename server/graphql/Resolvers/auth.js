@@ -1,4 +1,5 @@
 import bcrypt from 'bcrypt';
+import * as jwt from 'jsonwebtoken';
 
 import User from '../../models/user';
 
@@ -17,6 +18,37 @@ export default {
         _id: result.id,
         password: null,
       }));
+    } catch (error) {
+      throw error;
+    }
+  },
+  login: async ({ email, password }) => {
+    try {
+      const user = await User.findOne({ email });
+      if (!user) {
+        throw new Error('Invalid credentials!');
+      }
+
+      const isValid =
+        user.password && (await bcrypt.compare(password, user.password));
+      if (!isValid) {
+        throw new Error('Invalid credentials!');
+      }
+
+      return {
+        userId: user._id,
+        token: jwt.sign(
+          {
+            userId: user._id,
+            email: user.email,
+          },
+          process.env.JWT_SECRET,
+          {
+            expiresIn: '1h',
+          }
+        ),
+        tokenExpires: 1,
+      };
     } catch (error) {
       throw error;
     }

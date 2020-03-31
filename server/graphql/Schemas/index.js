@@ -25,12 +25,17 @@ export default buildSchema(`
         createdEvents: [Event!]
     }
 
+    type AuthData {
+        userId: ID!
+        token: String!
+        tokenExpires: Int!
+    }
+
     input InputEvent {
         title: String!
         description: String!
         price: Float!
         date: String!
-        creator: String!
     }
 
     input InputUser {
@@ -41,6 +46,7 @@ export default buildSchema(`
     type RootQuery {
         events: [Event!]!
         bookings: [Booking!]!
+        login(email: String!, password: String!): AuthData!
     }
 
     type RootMutation {
