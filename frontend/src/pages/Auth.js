@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 
 import { GlobalContext } from '../context/GlobalState';
 
-import styles from './Auth.module.css';
+import './Auth.css';
 
 const Auth = () => {
   const [email, changeEmail] = useState('');
@@ -56,8 +56,8 @@ const Auth = () => {
   };
   return (
     <div>
-      <form className={styles.wrapper} onSubmit={handleSubmit}>
-        <div className={styles['form-field']}>
+      <form className="form" onSubmit={handleSubmit}>
+        <div className="form-field">
           <label htmlFor="email">Email</label>
           <input
             type="email"
@@ -66,7 +66,7 @@ const Auth = () => {
             onChange={(e) => changeEmail(e.target.value)}
           />
         </div>
-        <div className={styles['form-field']}>
+        <div className="form-field">
           <label htmlFor="password">Password</label>
           <input
             type="password"

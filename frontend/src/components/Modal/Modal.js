@@ -8,7 +8,7 @@ const Modal = (props) => {
       <div className="modal__header">
         <h3>Create an event</h3>
       </div>
-      <div className="modal__content">Create an event here...</div>
+      <div className="modal__content">{props.children}</div>
       <div className="modal__actions">
         {props.canCancel && (
           <button className="modal__cancel btn" onClick={props.onCancel}>

@@ -6,7 +6,7 @@
   z-index: 4;
   display: flex;
   flex-direction: column;
-  top: 50%;
+  margin-top: -10rem;
   left: 50%;
   transform: translate(-50%);
   box-shadow: 2px 1px 4px rgba(0, 0, 0, 0.85);
@@ -19,9 +19,12 @@
   margin-bottom: 1rem;
 }
 
+.modal__content {
+  margin: 0 0.6rem;
+}
+
 .modal__actions {
   display: flex;
   justify-content: flex-end;
   padding: 0.7rem;
-  background: rgb(248, 248, 248);
 }
