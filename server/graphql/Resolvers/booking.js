@@ -3,7 +3,10 @@ import { transformBooking, transformEvent } from './merges';
 import Booking from '../../models/booking';
 
 export default {
-  bookings: async () => {
+  bookings: async (_, req) => {
+    if (!req.withId) {
+      throw new Error('Unauthenticated!');
+    }
     try {
       const bookings = await Booking.find();
       return bookings.map(transformBooking);

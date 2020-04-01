@@ -1,0 +1,20 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+a {
+  text-decoration: none;
+}
+
+ul {
+  list-style-type: none;
+}
+
+.page {
+  font-family: Arial, Helvetica, sans-serif;
+  margin: auto;
+  width: 100%;
+  max-width: 800px;
+}
