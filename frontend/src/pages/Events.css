@@ -10,3 +10,8 @@
 .create-event .btn {
   margin: 1rem;
 }
+.events__list-item {
+  border: 1px solid rgb(185, 163, 101);
+  padding: 1rem;
+  margin: 0.2rem;
+}

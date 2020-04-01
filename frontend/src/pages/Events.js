@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 
 import './Events.css';
 import Modal from '../components/Modal/Modal';
@@ -14,8 +14,10 @@ const initEvent = {
 
 const Events = (props) => {
   const { token } = useContext(GlobalContext);
+  const [events, setEvents] = useState([]);
   const [state, setState] = useState({
     showModal: false,
+    events: [],
     newEvent: initEvent,
   });
 
@@ -69,7 +71,7 @@ const Events = (props) => {
       });
       const data = await res.json();
 
-      if (!data.data) {
+      if (!data.data.createEvent) {
         return console.log('❌', data.errors);
       }
 
@@ -84,6 +86,46 @@ const Events = (props) => {
     });
     handleModalCancel();
   };
+
+  useEffect(() => {
+    const fetchEvents = async () => {
+      try {
+        const requestBody = {
+          query: `query {
+                    events {
+                        _id
+                        title
+                        description
+                        date
+                        price
+                        creator {
+                          _id
+                          email
+                        }
+                    }
+                }
+                `,
+        };
+        const res = await fetch('http://localhost:4000/graphql', {
+          method: 'POST',
+          body: JSON.stringify(requestBody),
+          headers: {
+            'Content-Type': 'Application/json',
+          },
+        });
+        const data = await res.json();
+
+        if (!data.data.events) {
+          return console.log('❌', data.errors);
+        }
+
+        setEvents(data.data.events);
+      } catch (error) {
+        return console.log('❌', error);
+      }
+    };
+    fetchEvents();
+  }, [events]);
 
   return (
     <div>
@@ -147,6 +189,18 @@ const Events = (props) => {
         </Modal>
       )}
       {state.showModal && <Backdrop />}
+
+      {events.length ? (
+        <ul className="events__list">
+          {events.map((event) => (
+            <li key={event._id} className="events__list-item">
+              {event.title}
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p>No Events Yet!!!</p>
+      )}
     </div>
   );
 };
