@@ -1,14 +1,20 @@
 ul {
   list-style-type: none;
   display: flex;
+  align-items: center;
 }
 
 .search {
   display: flex;
   width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 2;
   justify-content: space-evenly;
-  background: #d3dfb8;
+  background: #f7f8f4;
   align-items: center;
+  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.12);
 }
 
 .logo {
@@ -16,30 +22,16 @@ ul {
   width: 150px;
 }
 
-.inputSearch {
-  font-size: 1.4rem;
-  padding: 12px 40px;
-  margin: 20px 0 20px 10px;
-  border-radius: 20px 0 0 20px;
-  border: 2px solid #c6a15b;
-}
-
-.searchBtn {
-  font-size: 1.4rem;
-  padding: 12px;
-  color: white;
-  border-radius: 0 20px 20px 0;
-  border: 2px solid #c6a15b;
-  background: #c6a15b;
-}
-
 .otherBtns {
   color: #241903;
   font-size: 1.2rem;
   font-family: Arial, Helvetica, sans-serif;
   padding: 11px;
+  background: transparent;
+  outline: none;
+  border: none;
+  font-weight: normal;
 }
-a.active,
 .otherBtns:hover {
   color: #c6a15b;
   border-bottom: 1px solid #c6a15b;

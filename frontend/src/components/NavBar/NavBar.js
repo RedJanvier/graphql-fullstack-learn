@@ -6,7 +6,7 @@ import styles from './Search.module.css';
 import logo from '../../assets/logo.png';
 
 const NavBar = () => {
-  const { token } = useContext(GlobalContext);
+  const { token, logout } = useContext(GlobalContext);
 
   return (
     <div className={styles.search}>
@@ -16,23 +16,30 @@ const NavBar = () => {
       <div>
         <ul>
           <li>
-            {!token ? (
-              <NavLink to="/auth" className={styles.otherBtns}>
-                Login
-              </NavLink>
-            ) : (
-              <NavLink to="/bookings" className={styles.otherBtns}>
-                Bookings
-              </NavLink>
-            )}
-          </li>
-
-          <li>
             <NavLink to="/events" className={styles.otherBtns}>
               Events
             </NavLink>
           </li>
-          <li></li>
+          {!token ? (
+            <li>
+              <NavLink to="/auth" className={styles.otherBtns}>
+                Login
+              </NavLink>
+            </li>
+          ) : (
+            <>
+              <li>
+                <NavLink to="/bookings" className={styles.otherBtns}>
+                  Bookings
+                </NavLink>
+              </li>
+              <li>
+                <button className={styles.otherBtns} onClick={logout}>
+                  Logout
+                </button>
+              </li>
+            </>
+          )}
         </ul>
       </div>
     </div>

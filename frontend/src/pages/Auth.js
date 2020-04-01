@@ -12,40 +12,46 @@ const Auth = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const requestBody =
-      form === 'Login'
-        ? {
-            query: `
-                query {
-                    login (email: "${email}", password: "${password}") {
-                        userId
-                        token
-                        tokenExpires
-                    }
-                }
-            `,
-          }
-        : {
-            query: `
-                mutation {
-                    createUser(inputUser: { email: "${email}", password: "${password}" }) {
-                        _id
-                        email
-                    }
-                }
-            `,
-          };
-    const res = await fetch('http://localhost:4000/graphql', {
-      method: 'POST',
-      body: JSON.stringify(requestBody),
-      headers: {
-        'Content-Type': 'Application/json',
-      },
-    });
-    const data = await res.json();
+    try {
+      const requestBody =
+        form === 'Login'
+          ? {
+              query: `
+                  query {
+                      login (email: "${email}", password: "${password}") {
+                          userId
+                          token
+                          tokenExpires
+                      }
+                  }
+              `,
+            }
+          : {
+              query: `
+                  mutation {
+                      createUser(inputUser: { email: "${email}", password: "${password}" }) {
+                          _id
+                          email
+                      }
+                  }
+              `,
+            };
+      const res = await fetch('http://localhost:4000/graphql', {
+        method: 'POST',
+        body: JSON.stringify(requestBody),
+        headers: {
+          'Content-Type': 'Application/json',
+        },
+      });
+      const data = await res.json();
 
-    if (data.data.login.token.length) {
-      login(data.data.login);
+      if (data.data.login.token.length) {
+        login(data.data.login);
+      } else {
+        console.log('✔', data);
+      }
+    } catch (error) {
+      console.log('❌', error);
     }
   };
   return (

@@ -2,10 +2,15 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 a {
   text-decoration: none;
+}
+a.active {
+  color: #c6a15b;
+  border-bottom: 1px solid #c6a15b;
 }
 
 ul {
@@ -13,8 +18,7 @@ ul {
 }
 
 .page {
-  font-family: Arial, Helvetica, sans-serif;
-  margin: auto;
+  margin: 6rem auto;
   width: 100%;
   max-width: 800px;
 }
