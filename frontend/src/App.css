@@ -22,3 +22,18 @@ ul {
   width: 100%;
   max-width: 800px;
 }
+.btn {
+  background: rgb(172, 156, 113);
+  outline: none;
+  border: none;
+  padding: 0.3rem 1.2rem;
+  margin-left: 1rem;
+  box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.25);
+  color: white;
+  transition: all ease 0.2s;
+}
+.btn:hover,
+.btn:active {
+  background: rgb(185, 163, 101);
+  box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
+}

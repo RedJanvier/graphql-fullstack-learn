@@ -20,16 +20,17 @@ function App() {
       <Router>
         <>
           <NavBar />
-
-          <Switch>
-            {!token && <Redirect from="/" to="/auth" exact />}
-            {!token && <Redirect from="/bookings" to="/auth" exact />}
-            {token && <Redirect from="/" to="/events" exact />}
-            {token && <Redirect from="/auth" to="/events" exact />}
-            <Route path="/auth" component={Auth} />
-            <Route path="/events" component={Events} />
-            <Route path="/bookings" component={Bookings} />
-          </Switch>
+          <main className="page">
+            <Switch>
+              {!token && <Redirect from="/" to="/auth" exact />}
+              {!token && <Redirect from="/bookings" to="/auth" exact />}
+              {token && <Redirect from="/" to="/events" exact />}
+              {token && <Redirect from="/auth" to="/events" exact />}
+              <Route path="/auth" component={Auth} />
+              <Route path="/events" component={Events} />
+              <Route path="/bookings" component={Bookings} />
+            </Switch>
+          </main>
         </>
       </Router>
     </div>

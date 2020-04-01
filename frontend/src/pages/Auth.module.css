@@ -17,14 +17,3 @@
   padding: 0.3rem 0;
   width: 100%;
 }
-
-button {
-  background: #c6a15b;
-  color: #222;
-  padding: 0.25rem 2rem;
-  margin-right: 2rem;
-  border-radius: 3px;
-  font-size: 1.1rem;
-  font-weight: bold;
-  /* box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.7); */
-}

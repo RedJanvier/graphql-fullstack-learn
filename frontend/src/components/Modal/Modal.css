@@ -1,0 +1,27 @@
+.modal {
+  position: relative;
+  width: 90%;
+  max-width: 30rem;
+  background: #fff;
+  z-index: 4;
+  display: flex;
+  flex-direction: column;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%);
+  box-shadow: 2px 1px 4px rgba(0, 0, 0, 0.85);
+}
+
+.modal__header {
+  padding: 1.4rem;
+  background: rgb(172, 156, 113);
+  color: #fff;
+  margin-bottom: 1rem;
+}
+
+.modal__actions {
+  display: flex;
+  justify-content: flex-end;
+  padding: 0.7rem;
+  background: rgb(248, 248, 248);
+}

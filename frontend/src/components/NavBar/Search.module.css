@@ -10,7 +10,7 @@ ul {
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 2;
+  z-index: 1;
   justify-content: space-evenly;
   background: #f7f8f4;
   align-items: center;

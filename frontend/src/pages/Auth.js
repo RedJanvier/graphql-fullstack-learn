@@ -55,7 +55,7 @@ const Auth = () => {
     }
   };
   return (
-    <div className="page">
+    <div>
       <form className={styles.wrapper} onSubmit={handleSubmit}>
         <div className={styles['form-field']}>
           <label htmlFor="email">Email</label>
@@ -76,9 +76,12 @@ const Auth = () => {
           />
         </div>
         <div className="form-actions">
-          <button type="submit">Submit</button>
+          <button type="submit" className="btn">
+            Submit
+          </button>
           <button
             type="button"
+            className="btn"
             onClick={() => changeForm(form === 'Login' ? 'Register' : 'Login')}
           >
             switch to {form === 'Login' ? 'Register' : 'Login'}

@@ -1,0 +1,12 @@
+.create-event {
+  display: flex;
+  text-align: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 2rem;
+  border: 2px solid rgb(172, 156, 113);
+  border-radius: 3px;
+}
+.create-event .btn {
+  margin: 1rem;
+}
