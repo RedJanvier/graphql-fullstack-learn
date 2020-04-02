@@ -3,20 +3,33 @@ import React, { useContext } from 'react';
 import { GlobalContext } from '../../../context/GlobalState';
 import './ListItem.css';
 
-const ListItem = ({ title, price, date, creator }) => {
+const ListItem = ({
+  _id: eventId,
+  title,
+  price,
+  date,
+  creator,
+  showDetails,
+}) => {
   const { userId } = useContext(GlobalContext);
-  const d = new Date(date);
+
   return (
     <li className="events__list-item">
       <div>
         <h2>{title}</h2>
         <h3>
-          {price} - {d.toDateString()}
+          ${price} - {new Date(date).toLocaleDateString()}
         </h3>
       </div>
       <div>
         {creator._id !== userId ? (
-          <button className="btn">View Details</button>
+          <button
+            className="btn"
+            disabled={userId ? '' : 'disabled'}
+            onClick={() => showDetails(eventId)}
+          >
+            View Details
+          </button>
         ) : (
           <p>You are the owner</p>
         )}

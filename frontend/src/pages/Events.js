@@ -2,7 +2,6 @@ import React, { useState, useContext, useEffect } from 'react';
 
 import './Events.css';
 import Modal from '../components/Modal/Modal';
-import Backdrop from '../components/Backdrop/Backdrop';
 import EventsList from '../components/EventsList/EventsList';
 import Spinner from '../components/Spinner/Spinner';
 import { GlobalContext } from '../context/GlobalState';
@@ -19,9 +18,14 @@ const Events = (props) => {
   const [events, setEvents] = useState([]);
   const [state, setState] = useState({
     showModal: false,
-    events: [],
+    selectedEvent: null,
     newEvent: initEvent,
   });
+
+  const onViewDetails = (id) => {
+    const event = events.filter((event) => event._id === id);
+    setState({ ...state, selectedEvent: event[0] });
+  };
 
   const handleInputChange = (e) => {
     setState({
@@ -33,7 +37,8 @@ const Events = (props) => {
     });
   };
 
-  const handleModalCancel = () => setState({ ...state, showModal: false });
+  const handleModalCancel = () =>
+    setState({ ...state, showModal: false, selectedEvent: null });
 
   const handleModalConfirm = async () => {
     try {
@@ -88,7 +93,7 @@ const Events = (props) => {
     });
     handleModalCancel();
   };
-
+  const handleBookEvent = () => {};
   useEffect(() => {
     const fetchEvents = async () => {
       try {
@@ -149,6 +154,8 @@ const Events = (props) => {
           canConfirm={true}
           onCancel={handleModalCancel}
           onConfirm={handleModalConfirm}
+          title="Add Event"
+          confirmText="Add"
         >
           <form className="form">
             <div className="form-field">
@@ -190,9 +197,29 @@ const Events = (props) => {
           </form>
         </Modal>
       )}
-      {state.showModal && <Backdrop />}
+      {state.selectedEvent && (
+        <Modal
+          canCancel={true}
+          canConfirm={true}
+          onCancel={handleModalCancel}
+          onConfirm={handleBookEvent}
+          title="View Details"
+          confirmText="Book"
+        >
+          <h2>{state.selectedEvent.title}</h2>
+          <h3>
+            {state.selectedEvent.price} -{' '}
+            {new Date(state.selectedEvent.date).toLocaleDateString()}
+          </h3>
+          <p>{state.selectedEvent.description}</p>
+        </Modal>
+      )}
 
-      {events.length ? <EventsList events={events} /> : <Spinner />}
+      {events.length ? (
+        <EventsList events={events} onViewDetails={onViewDetails} />
+      ) : (
+        <Spinner />
+      )}
     </div>
   );
 };
