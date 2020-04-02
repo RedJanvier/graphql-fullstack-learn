@@ -3,6 +3,8 @@ import React, { useState, useContext, useEffect } from 'react';
 import './Events.css';
 import Modal from '../components/Modal/Modal';
 import Backdrop from '../components/Backdrop/Backdrop';
+import EventsList from '../components/EventsList/EventsList';
+import Spinner from '../components/Spinner/Spinner';
 import { GlobalContext } from '../context/GlobalState';
 
 const initEvent = {
@@ -190,17 +192,7 @@ const Events = (props) => {
       )}
       {state.showModal && <Backdrop />}
 
-      {events.length ? (
-        <ul className="events__list">
-          {events.map((event) => (
-            <li key={event._id} className="events__list-item">
-              {event.title}
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <p>No Events Yet!!!</p>
-      )}
+      {events.length ? <EventsList events={events} /> : <Spinner />}
     </div>
   );
 };
