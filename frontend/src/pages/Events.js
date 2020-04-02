@@ -93,7 +93,49 @@ const Events = (props) => {
     });
     handleModalCancel();
   };
-  const handleBookEvent = () => {};
+  const handleBookEvent = async (eventId) => {
+    try {
+      if (!token) {
+        handleModalCancel();
+        return;
+      }
+      const requestBody = {
+        query: ` mutation {
+        bookEvent (eventId: "${eventId}") {
+          _id
+          event {
+            _id
+            title
+            creator {
+              email
+            }
+          }
+          user {
+            _id
+            email
+          }
+        }
+      }`,
+      };
+      const res = await fetch('http://localhost:4000/graphql', {
+        method: 'POST',
+        body: JSON.stringify(requestBody),
+        headers: {
+          'Content-Type': 'Application/json',
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      const data = await res.json();
+
+      if (!data.data.bookEvent) return console.log('❌', data.errors);
+
+      handleModalCancel();
+      console.log('✅', data.data.bookEvent);
+    } catch (error) {
+      return console.log('❌', error);
+    }
+  };
+
   useEffect(() => {
     const fetchEvents = async () => {
       try {
@@ -202,7 +244,7 @@ const Events = (props) => {
           canCancel={true}
           canConfirm={true}
           onCancel={handleModalCancel}
-          onConfirm={handleBookEvent}
+          onConfirm={handleBookEvent.bind(this, state.selectedEvent._id)}
           title="View Details"
           confirmText="Book"
         >
