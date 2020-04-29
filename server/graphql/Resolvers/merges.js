@@ -1,10 +1,15 @@
+import Dataloader from 'dataloader';
+
 import User from '../../models/user';
 import Event from '../../models/Event';
 import { dateToISO } from '../../helpers/date';
 
 let fetchEvents;
 let fetchUser;
-
+const eventLoader = new Dataloader((eventIds) => fetchEvents(eventIds));
+const userLoader = new Dataloader((userIds) =>
+  User.find({ _id: { $in: userIds } })
+);
 export const transformEvent = (event) => ({
   ...event._doc,
   _id: event.id,
@@ -13,8 +18,8 @@ export const transformEvent = (event) => ({
 });
 const fetchSingleEvent = async (eventId) => {
   try {
-    const event = await Event.findById(eventId);
-    return transformEvent(event);
+    const event = await eventLoader.load(eventId);
+    return event;
   } catch (error) {
     console.log('❌', error.message.red.bold);
     throw error;
@@ -31,11 +36,11 @@ export const transformBooking = (booking) => ({
 
 fetchUser = async (userID) => {
   try {
-    const user = await User.findById(userID);
+    const user = await userLoader.load(userID);
     return {
       ...user._doc,
       _id: user.id,
-      createdEvents: fetchEvents.bind(this, user._doc.createdEvents),
+      createdEvents: eventLoader.loadMany.bind(this, user._doc.createdEvents),
     };
   } catch (error) {
     console.log('❌', error.message.red.bold);
