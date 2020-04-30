@@ -17,24 +17,32 @@ const Auth = () => {
         form === 'Login'
           ? {
               query: `
-                  query {
-                      login (email: "${email}", password: "${password}") {
+                  query Login($email: String!, $password: String! ) {
+                      login (email: $email, password: $password) {
                           userId
                           token
                           tokenExpires
                       }
                   }
               `,
+              variables: {
+                email,
+                password,
+              },
             }
           : {
               query: `
-                  mutation {
-                      createUser(inputUser: { email: "${email}", password: "${password}" }) {
+                  mutation CreateUser($email: String!, $password: String!) {
+                      createUser(inputUser: { email: $email, password: $password }) {
                           _id
                           email
                       }
                   }
               `,
+              variables: {
+                email,
+                password,
+              },
             };
       const res = await fetch('http://localhost:4000/graphql', {
         method: 'POST',
