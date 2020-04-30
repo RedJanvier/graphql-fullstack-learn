@@ -53,8 +53,8 @@ const Events = (props) => {
 
       const requestBody = {
         query: `
-                  mutation {
-                      createEvent(inputEvent: { title: "${title}", description: "${description}", price: ${price}, date: "${date}" }) {
+                  mutation CreateEvent($title: String!, $description: String!, $price: Float!, $date: String!) {
+                      createEvent(inputEvent: { title: $title, description: $description, price: $price, date: $date }) {
                           _id
                           title
                           description
@@ -67,6 +67,12 @@ const Events = (props) => {
                       }
                   }
               `,
+        variables: {
+          title,
+          description,
+          price: parseFloat(price),
+          date,
+        },
       };
       const res = await fetch('http://localhost:4000/graphql', {
         method: 'POST',
