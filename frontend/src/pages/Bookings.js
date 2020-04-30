@@ -11,8 +11,8 @@ const Bookings = (props) => {
   const onCancelBooking = async (bookingId) => {
     if (!token) return;
     const requestBody = {
-      query: ` mutation {
-          cancelBooking(bookingId: "${bookingId}") {
+      query: ` mutation CancelBooking($id: String!) {
+          cancelBooking(bookingId: $id) {
             _id
             title
             description
@@ -24,6 +24,9 @@ const Bookings = (props) => {
             }
           }
         }`,
+      variables: {
+        id: bookingId,
+      },
     };
     const res = await fetch('http://localhost:4000/graphql', {
       method: 'POST',
