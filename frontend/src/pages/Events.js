@@ -106,8 +106,8 @@ const Events = (props) => {
         return;
       }
       const requestBody = {
-        query: ` mutation {
-        bookEvent (eventId: "${eventId}") {
+        query: ` mutation BookEvent($id) {
+        bookEvent (eventId: $id) {
           _id
           event {
             _id
@@ -122,6 +122,9 @@ const Events = (props) => {
           }
         }
       }`,
+      variables: {
+        id: eventId
+      }
       };
       const res = await fetch('http://localhost:4000/graphql', {
         method: 'POST',
